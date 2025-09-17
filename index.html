@@ -6,13 +6,13 @@
 </head>
 
 </html<body>
-  <h1>Fetch from Localhost</h1>
+  <h1>Fetch from local network</h1>
   <button id="fetchBtnFinesse">Fetch Data from finesse</button>
   <button id="fetchBtnLocalhost">Fetch Data from localhost:3000</button>
   <pre id="output"></pre>
 
   <script>
-    document.getElementById("fetchBtn").addEventListener("click", () => {
+    document.getElementById("fetchBtnFinesse").addEventListener("click", () => {
       fetch("https://lab01uefin3a.lab.lan/finesse/api/SystemInfo")
         .then(response => {
           if (!response.ok) {
