@@ -7,12 +7,28 @@
 
 </html<body>
   <h1>Fetch from Localhost</h1>
-  <button id="fetchBtn">Fetch Data</button>
+  <button id="fetchBtnFinesse">Fetch Data from finesse</button>
+  <button id="fetchBtnLocalhost">Fetch Data from localhost:3000</button>
   <pre id="output"></pre>
 
   <script>
     document.getElementById("fetchBtn").addEventListener("click", () => {
       fetch("https://lab01uefin3a.lab.lan/finesse/api/SystemInfo")
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok " + response.statusText);
+          }
+          return response.text(); // change to response.json() if it's JSON
+        })
+        .then(data => {
+          document.getElementById("output").textContent = data;
+        })
+        .catch(error => {
+          document.getElementById("output").textContent = "Fetch error: " + error;
+        });
+    });
+    document.getElementById("fetchBtnLocalhost").addEventListener("click", () => {
+      fetch("http://localhost:3000")
         .then(response => {
           if (!response.ok) {
             throw new Error("Network response was not ok " + response.statusText);
