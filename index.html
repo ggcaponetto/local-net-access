@@ -15,7 +15,9 @@
   <script>
     // Fetch from finesse
     document.getElementById("fetchBtnFinesse").addEventListener("click", () => {
-      fetch("https://lab01uefin3a.lab.lan/finesse/api/SystemInfo")
+      // https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo
+      // https://lab01uefin3a.lab.lan/finesse/api/SystemInfo
+      fetch("https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo")
         .then(response => {
           if (!response.ok) {
             throw new Error("Network response was not ok " + response.statusText);
