@@ -13,11 +13,46 @@
     </button>
     <button id="checkLocalNetBtn">Check Local Network Permission</button>
     <button id="fetchBtnProtected">
-      Fetch protected resource on finesse (no-credentials) https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo
+      Fetch protected resource on finesse (no-credentials)
+      https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo
+    </button>
+        <button id="fetchBtnProtectedRoot">
+      Fetch protected resource on finesse (no-credentials)
+      https://lab01uefin7a.lab.lan:8445
     </button>
     <pre id="output"></pre>
 
     <script>
+      // Fetch from finesse root
+      document
+        .getElementById("fetchBtnProtectedRoot")
+        .addEventListener("click", () => {
+          // https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo
+          // https://lab01uefin3a.lab.lan/finesse/api/SystemInfo
+          fetch("https://lab01uefin7a.lab.lan:8445", {
+            // disabled, it should work, since the server returns ACAO *
+            headers: {
+              Accept: "*/*",
+              "Accept-Language": "en-US,en;q=0.5",
+            },
+            method: "GET",
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(
+                  "Network response was not ok " + response.statusText
+                );
+              }
+              return response.text();
+            })
+            .then((data) => {
+              document.getElementById("output").textContent = data;
+            })
+            .catch((error) => {
+              document.getElementById("output").textContent =
+                "Fetch error: " + error;
+            });
+        });
       // Fetch from finesse
       document
         .getElementById("fetchBtnProtected")
