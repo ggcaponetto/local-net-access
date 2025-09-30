@@ -6,160 +6,57 @@
   </head>
 
   <body>
-    <h1>Fetch from local network 1.0.0</h1>
-    <button id="fetchBtnFinesse">Fetch Data from finesse</button>
-    <button id="fetchBtnLocalhost">
-      Fetch Data from https://127.0.0.1:3000/fake-user
-    </button>
-    <button id="checkLocalNetBtn">Check Local Network Permission</button>
-    <button id="fetchBtnProtected">
-      Fetch protected resource on finesse (with-credentials)
-      https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo
-    </button>
-    <button id="fetchBtnProtectedRoot">
-      Fetch protected resource on finesse (no-credentials)
-      https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo
-    </button>
+    <h1>Fetch from local network</h1>
+    <input
+      type="text"
+      id="localhostInput"
+      value="https://127.0.0.1:3000/fake-user"
+      style="width: 400px"
+    />
+    <label>
+      <input type="checkbox" id="credentialsCheckbox" checked />
+      Include credentials
+    </label>
+    <button id="fetchButton">Fetch</button>
     <pre id="output"></pre>
 
     <script>
       // Fetch from finesse root
-      document
-        .getElementById("fetchBtnProtectedRoot")
-        .addEventListener("click", () => {
-          // https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo
-          // https://lab01uefin3a.lab.lan/finesse/api/SystemInfo
-          fetch("https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo", {
-            // disabled, it should work, since the server returns ACAO *
-            headers: {
-              Accept: "*/*",
-              "Accept-Language": "en-US,en;q=0.5",
-            },
-            method: "GET",
+      const url = document.getElementById("localhostInput").value;
+      const includeCredentials = document.getElementById(
+        "credentialsCheckbox"
+      ).checked;
+      document.getElementById("fetchButton").addEventListener("click", () => {
+        // https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo
+        // https://lab01uefin3a.lab.lan/finesse/api/SystemInfo
+        fetch(url, {
+          // disabled, it should work, since the server returns ACAO *
+          ...(includeCredentials ? { credentials: "include" } : {}),
+          headers: {
+            "User-Agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) Gecko/20100101 Firefox/144.0",
+            Accept: "*/*",
+            "Accept-Language": "en-US,en;q=0.5",
+            authorization: "Basic XXXYYY",
+          },
+          method: "GET",
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                "Network response was not ok " + response.statusText
+              );
+            }
+            return response.text();
           })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(
-                  "Network response was not ok " + response.statusText
-                );
-              }
-              return response.text();
-            })
-            .then((data) => {
-              document.getElementById("output").textContent = data;
-            })
-            .catch((error) => {
-              document.getElementById("output").textContent =
-                "Fetch error: " + error;
-            });
-        });
-      // Fetch from finesse
-      document
-        .getElementById("fetchBtnProtected")
-        .addEventListener("click", () => {
-          // https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo
-          // https://lab01uefin3a.lab.lan/finesse/api/SystemInfo
-          fetch("https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo", {
-            // disabled, it should work, since the server returns ACAO *
-            credentials: "include",
-            headers: {
-              "User-Agent":
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) Gecko/20100101 Firefox/144.0",
-              Accept: "*/*",
-              "Accept-Language": "en-US,en;q=0.5",
-              "Sec-Fetch-Dest": "empty",
-              "Sec-Fetch-Mode": "cors",
-              "Sec-Fetch-Site": "cross-site",
-            },
-            method: "GET",
-            mode: "cors",
+          .then((data) => {
+            document.getElementById("output").textContent = data;
           })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(
-                  "Network response was not ok " + response.statusText
-                );
-              }
-              return response.text();
-            })
-            .then((data) => {
-              document.getElementById("output").textContent = data;
-            })
-            .catch((error) => {
-              document.getElementById("output").textContent =
-                "Fetch error: " + error;
-            });
-        });
-
-      // Fetch from finesse
-      document
-        .getElementById("fetchBtnFinesse")
-        .addEventListener("click", () => {
-          // https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo
-          // https://lab01uefin3a.lab.lan/finesse/api/SystemInfo
-          fetch("https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo")
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(
-                  "Network response was not ok " + response.statusText
-                );
-              }
-              return response.text();
-            })
-            .then((data) => {
-              document.getElementById("output").textContent = data;
-            })
-            .catch((error) => {
-              document.getElementById("output").textContent =
-                "Fetch error: " + error;
-            });
-        });
-
-      // Fetch from localhost
-      document
-        .getElementById("fetchBtnLocalhost")
-        .addEventListener("click", () => {
-          fetch("https://127.0.0.1:3000/fake-user")
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(
-                  "Network response was not ok " + response.statusText
-                );
-              }
-              return response.text();
-            })
-            .then((data) => {
-              document.getElementById("output").textContent = data;
-            })
-            .catch((error) => {
-              document.getElementById("output").textContent =
-                "Fetch error: " + error;
-            });
-        });
-
-      // Check Local Network Permission
-      document
-        .getElementById("checkLocalNetBtn")
-        .addEventListener("click", () => {
-          navigator.permissions
-            .query({ name: "local-network-access" })
-            .then((result) => {
-              console.log("Local network permission state:", result.state);
-
-              if (result.state === "granted") {
-                console.log("✅ Local network access granted");
-              } else if (result.state === "prompt") {
-                console.log(
-                  "⚠️ Local network access requires user permission (prompt)"
-                );
-              } else if (result.state === "denied") {
-                console.log("❌ Local network access denied");
-              }
-            })
-            .catch((err) => {
-              console.error("Permission query failed:", err);
-            });
-        });
+          .catch((error) => {
+            document.getElementById("output").textContent =
+              "Fetch error: " + error;
+          });
+      });
     </script>
   </body>
 </html>
