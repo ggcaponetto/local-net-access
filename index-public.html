@@ -13,12 +13,12 @@
     </button>
     <button id="checkLocalNetBtn">Check Local Network Permission</button>
     <button id="fetchBtnProtected">
-      Fetch protected resource on finesse (no-credentials)
+      Fetch protected resource on finesse (with-credentials)
       https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo
     </button>
-        <button id="fetchBtnProtectedRoot">
+    <button id="fetchBtnProtectedRoot">
       Fetch protected resource on finesse (no-credentials)
-      https://lab01uefin7a.lab.lan:8445
+      https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo
     </button>
     <pre id="output"></pre>
 
@@ -29,7 +29,7 @@
         .addEventListener("click", () => {
           // https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo
           // https://lab01uefin3a.lab.lan/finesse/api/SystemInfo
-          fetch("https://lab01uefin7a.lab.lan:8445", {
+          fetch("https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo", {
             // disabled, it should work, since the server returns ACAO *
             headers: {
               Accept: "*/*",
