@@ -17,6 +17,10 @@
       <input type="checkbox" id="credentialsCheckbox" checked />
       Include credentials
     </label>
+        <label>
+      <input type="checkbox" id="includeBasicAuth" checked />
+      Include basic authorization
+    </label>
     <button id="fetchButton">Fetch</button>
     <pre id="output"></pre>
 
@@ -26,9 +30,10 @@
       const includeCredentials = document.getElementById(
         "credentialsCheckbox"
       ).checked;
+      const includeBasicAuth = document.getElementById(
+        "includeBasicAuth"
+      ).checked;
       document.getElementById("fetchButton").addEventListener("click", () => {
-        // https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo
-        // https://lab01uefin3a.lab.lan/finesse/api/SystemInfo
         fetch(url, {
           // disabled, it should work, since the server returns ACAO *
           ...(includeCredentials ? { credentials: "include" } : {}),
@@ -37,7 +42,7 @@
               "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) Gecko/20100101 Firefox/144.0",
             Accept: "*/*",
             "Accept-Language": "en-US,en;q=0.5",
-            authorization: "Basic XXXYYY",
+            ...(includeBasicAuth ? { authorization: "Basic XXXYYY" } : {}),
           },
           method: "GET",
         })
