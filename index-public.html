@@ -17,7 +17,7 @@
       <input type="checkbox" id="credentialsCheckbox" checked />
       Include credentials
     </label>
-        <label>
+    <label>
       <input type="checkbox" id="includeBasicAuth" checked />
       Include basic authorization
     </label>
@@ -25,15 +25,14 @@
     <pre id="output"></pre>
 
     <script>
-      // Fetch from finesse root
-      const url = document.getElementById("localhostInput").value;
-      const includeCredentials = document.getElementById(
-        "credentialsCheckbox"
-      ).checked;
-      const includeBasicAuth = document.getElementById(
-        "includeBasicAuth"
-      ).checked;
       document.getElementById("fetchButton").addEventListener("click", () => {
+        // Fetch from finesse root
+        const url = document.getElementById("localhostInput").value;
+        const includeCredentials = document.getElementById(
+          "credentialsCheckbox"
+        ).checked;
+        const includeBasicAuth =
+          document.getElementById("includeBasicAuth").checked;
         fetch(url, {
           // disabled, it should work, since the server returns ACAO *
           ...(includeCredentials ? { credentials: "include" } : {}),
