@@ -9,11 +9,11 @@
     <h1>Fetch from local network</h1>
     <button id="fetchBtnFinesse">Fetch Data from finesse</button>
     <button id="fetchBtnLocalhost">
-      Fetch Data from https://capog.local:3000/fake-user
+      Fetch Data from https://127.0.0.1:3000/fake-user
     </button>
     <button id="checkLocalNetBtn">Check Local Network Permission</button>
     <button id="fetchBtnProtected">
-      Fetch protected ressource on finesse (no-credentials) https://127.0.0.1:3000/fake-user
+      Fetch protected resource on finesse (no-credentials) https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo
     </button>
     <pre id="output"></pre>
 
@@ -24,7 +24,7 @@
         .addEventListener("click", () => {
           // https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo
           // https://lab01uefin3a.lab.lan/finesse/api/SystemInfo
-          fetch("https://127.0.0.1:3000/fake-user", {
+          fetch("https://lab01uefin7a.lab.lan:8445/finesse/api/SystemInfo", {
             // disabled, it should work, since the server returns ACAO *
             credentials: "include",
             headers: {
@@ -84,7 +84,7 @@
       document
         .getElementById("fetchBtnLocalhost")
         .addEventListener("click", () => {
-          fetch("https://capog.local:3000/fake-user")
+          fetch("https://127.0.0.1:3000/fake-user")
             .then((response) => {
               if (!response.ok) {
                 throw new Error(
