@@ -29,6 +29,10 @@
       />
       Include basic authorization string
     </label>
+    <label>
+      <input type="text" id="method" placeholder="GET" />
+      Include HTTP method
+    </label>
     <button id="fetchButton">Fetch</button>
     <pre id="output"></pre>
 
@@ -44,6 +48,8 @@
         const authorizationHeaderValue = document.getElementById(
           "authorizationHeaderValue"
         ).value;
+        const method =
+          document.getElementById("method").value.trim().toUpperCase();
         fetch(url, {
           // disabled, it should work, since the server returns ACAO *
           ...(includeCredentials ? { credentials: "include" } : {}),
@@ -56,7 +62,7 @@
               ? { authorization: authorizationHeaderValue }
               : {}),
           },
-          method: "GET",
+          method: method,
         })
           .then((response) => {
             if (!response.ok) {
