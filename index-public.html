@@ -21,6 +21,14 @@
       <input type="checkbox" id="includeBasicAuth" checked />
       Include basic authorization
     </label>
+    <label>
+      <input
+        type="text"
+        id="authorizationHeaderValue"
+        placeholder="Basic XXXYYY"
+      />
+      Include basic authorization string
+    </label>
     <button id="fetchButton">Fetch</button>
     <pre id="output"></pre>
 
@@ -33,6 +41,9 @@
         ).checked;
         const includeBasicAuth =
           document.getElementById("includeBasicAuth").checked;
+        const authorizationHeaderValue = document.getElementById(
+          "authorizationHeaderValue"
+        ).value;
         fetch(url, {
           // disabled, it should work, since the server returns ACAO *
           ...(includeCredentials ? { credentials: "include" } : {}),
@@ -41,7 +52,9 @@
               "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) Gecko/20100101 Firefox/144.0",
             Accept: "*/*",
             "Accept-Language": "en-US,en;q=0.5",
-            ...(includeBasicAuth ? { authorization: "Basic XXXYYY" } : {}),
+            ...(includeBasicAuth
+              ? { authorization: authorizationHeaderValue }
+              : {}),
           },
           method: "GET",
         })
