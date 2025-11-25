@@ -6,16 +6,15 @@
 </head>
 
 <body>
-  <h1>loading iframe that accesses https://localhost:8080/wxcc_login.js</h1>
+  <h1>loading a web component that loads an ifram with src set to https://ggcaponetto.github.io/local-net-access/page-doing-lna-via-script-in-head.html</h1>
   <my-gadget></my-gadget>
-
   <script>
     class MyGadget extends HTMLElement {
       constructor() {
         super();
         const shadow = this.attachShadow({ mode: 'open' });
         const iframe = document.createElement('iframe');
-        iframe.src = 'https://ggcaponetto.github.io/local-net-access/index-webpack.html';
+        iframe.src = 'https://ggcaponetto.github.io/local-net-access/page-doing-lna-via-script-in-head.html';
         iframe.width = '1500px';
         iframe.height = '800px';
         iframe.setAttribute('allow', 'local-network-access');
