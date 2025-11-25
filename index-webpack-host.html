@@ -7,7 +7,23 @@
 
 <body>
   <h1>loading iframe that accesses https://localhost:8080/wxcc_login.js</h1>
-    <iframe src="https://ggcaponetto.github.io/local-net-access/index-webpack.html" width="1500px" height="800px" allow="local-network-access"></iframe>
+  <my-gadget></my-gadget>
+
+  <script>
+    class MyGadget extends HTMLElement {
+      constructor() {
+        super();
+        const shadow = this.attachShadow({ mode: 'open' });
+        const iframe = document.createElement('iframe');
+        iframe.src = 'https://ggcaponetto.github.io/local-net-access/index-webpack.html';
+        iframe.width = '1500px';
+        iframe.height = '800px';
+        iframe.setAttribute('allow', 'local-network-access');
+        shadow.appendChild(iframe);
+      }
+    }
+    customElements.define('my-gadget', MyGadget);
+  </script>
 </body>
   
 </html
