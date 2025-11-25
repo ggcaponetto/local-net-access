@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Fetch Example from an iframe</title>
-  <script type="text/javascript" src="https://localhost:8080/wxcc_login.js"></script>
+  <script type="text/javascript" src="https://localhost:8080/wxcc_login.js" 
+          onload="document.getElementById('status').textContent = '✓ Script loaded successfully'; document.getElementById('status').style.color = 'green';"
+          onerror="document.getElementById('status').textContent = '✗ Script failed to load'; document.getElementById('status').style.color = 'red';"></script>
 </head>
   <body>
     <h1>loading https://localhost:8080/wxcc_login.js in the head (script tag)</h1>
+    <p id="status">Loading script...</p>
   </body>
 </html
